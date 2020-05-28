@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "EmailSend";
+}
+
+<h2>EmailSend</h2>
+
+@using (Html.BeginForm("SendEmail", "Eveniments"))
+{
+    @Html.AntiForgeryToken()
+
+    <p>
+        Apasa butonul de mai jos si vei primi pe e-mail informatiile aferente evenimentului ales.
+    </p>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Trimite-mi pe e-mail" />
+        </div>
+    </div>
+}

@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Registration";
+    Layout = null;
+}
+<link href="~/styles/style.css" rel="stylesheet" />
+<!-- title -->
+<h1>
+    <span>E</span>venTourTM
+</h1>
+<!-- //title -->
+<!-- content -->
+<div class="sub-main-w3">
+    <form action="Register" method="post">
+        <!-- <img src="images/logo.png" alt="">-->
+        <h2>Creare cont</h2>
+        @using (Html.BeginForm("Login", "Register"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-style-agile">
+                <input placeholder="Nume" name="Nume" type="text" required="">
+            </div>
+            <div class="form-style-agile">
+                <input placeholder="Email" name="Email" type="text" required="">
+            </div>
+            <div class="form-style-agile">
+                <input placeholder="Password" name="Password" type="password" required="">
+            </div>
+            <input type="submit" value="Create">
+        }
+    </form>
+</div>

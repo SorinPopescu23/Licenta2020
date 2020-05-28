@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Licenta1.Models.Eveniment>
+
+@{
+    ViewBag.Title = "IndexUser";
+}
+    <p>
+        <form id="formSearch" method="post">
+            <div class="row" id="SearchBox">
+                <div class="col-md-2">Cautare dupa denumire:</div>
+                <div class="col-md-2"><input type="text" id="searchedName" name="searchedName" /></div>
+                <div class="col-md-1"><input type="submit" id="submitsearch" value="Afiseaza" /></div>
+            </div>
+        </form>
+    </p>
+<h2>Evenimente</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumeEvent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataEvent)
+        </th>
+        @* <th>
+                @Html.DisplayNameFor(model => model.DescriereEvent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PozeEvent)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.GenEvent)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="@item.PozeEvent" style="max-width:100px; max-height:100px" ; />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeEvent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataEvent)
+            </td>
+            @* <td>
+                    @Html.DisplayFor(modelItem => item.DescriereEvent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PozeEvent)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.GenEvent)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.EvenimentId }) |
+                @if (Session["Id"] != null) {
+                    @Html.ActionLink("Anunta-ma", "SendEmail", new { id = item.EvenimentId })}
+            </td>
+        </tr>
+     }
+
+</table>

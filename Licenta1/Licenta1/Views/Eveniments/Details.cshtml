@@ -1,0 +1,162 @@
+﻿@model Licenta1.Models.Eveniment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
+<script src="//js.pusher.com/4.0/pusher.min.js"></script>
+<style>
+    .user_name {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .comments-list .media {
+        border-bottom: 1px dotted #ccc;
+    }
+</style>
+
+<h2>Details</h2>
+<div id="app">
+    <div>
+        <h4>Eveniment</h4>
+        <hr />
+        <dl class="dl-horizontal">
+
+            @* <dt>
+                    @Html.DisplayNameFor(model => model.PozeEvent)
+                </dt>*@
+
+            <dd>
+                <img src="@(Model.PozeEvent)" style="max-width:300px; max-height:300px" />
+                <p>@Html.ActionLink("Galerie foto", "Details", "Pozes", new { id = Model.Poze.PozeId }, null) </p>
+                @* @Html.DisplayFor(model => model.PozeEvent)*@
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.NumeEvent)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NumeEvent)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DataEvent)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DataEvent)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DescriereEvent)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DescriereEvent)
+            </dd>
+
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.GenEvent)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.GenEvent)
+            </dd>
+
+        </dl>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="page-header">
+                    <h1><small class="pull-right">{{comments.length}} comments</small> Comentarii </h1>
+                </div>
+                <div class="comments-list">
+                    <div class="media" v-for="com in comments">
+                        <div class="media-body">
+                            <h4 class="media-heading user_name">{{com.Name}}</h4>
+                            {{com.Body}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <br />
+        <p>Your Comment</p>
+        <form onsubmit="return false;">
+            <input type="text" id="Name" placeholder="Numele tau" v-model="comment.Name" class="form-control" />
+            <textarea rows="3" placeholder="Comentariul tau" id="Body" v-model="comment.Body" class="form-control"></textarea>
+            <button class="btn btn-success" v-on:click="submit_comment()">save</button>
+        </form>
+    </div>
+</div>
+
+    <p>
+        @if (Session["Email"] == null)
+        { }
+        else
+        {
+            if (Session["Email"].ToString() == "admin")
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = Model.EvenimentId })}
+        }
+        | @Html.ActionLink("Back to List", "Index")
+    </p>
+
+    <script>
+    var pusher = new Pusher('0c257db48809018c5fd3', {
+        cluster: 'eu'
+    });
+    var my_channel = pusher.subscribe('my-channel');
+    var app = new Vue({
+        el: '#app',
+        data: {
+            comments: [],
+            comment: {
+                Name: '',
+                Body: '',
+                EvenimentId: @Model.EvenimentId
+            }
+        },
+        created: function() {
+            this.get_comments();
+            this.listen();
+        },
+        methods: {
+            get_comments: function() {
+                axios.get('@Url.Action("Comments", "Eveniments", new { id = @Model.EvenimentId }, protocol: Request.Url.Scheme)')
+                    .then((response) => {
+
+                        this.comments = response.data;
+
+                    });
+
+            },
+            listen: function() {
+                my_channel.bind("my-event", (data) => {
+                    if (data.EvenimentId == this.comment.EvenimentId) {
+                        this.comments.push(data);
+                    }
+
+                })
+            },
+            submit_comment: function() {
+                axios.post('@Url.Action("Comment", "Eveniments", new {}, protocol: Request.Url.Scheme)', this.comment)
+                    .then((response) => {
+                        this.comment.Name = '';
+                        this.comment.Body = '';
+                        alert("Comentariu postat");
+
+                    });
+            }
+        }
+    });
+    </script>

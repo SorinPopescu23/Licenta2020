@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <!-- <link href="~/styles/style.css" rel="stylesheet" />-->
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*<style>
+            .navbar-header:hover, .nav li:hover, .dropdown:hover .btn {
+                background-color: red;
+            }
+
+            .dropdown-item center a:hover {
+                background-color: #ddd;
+            }
+        </style>
+
+
+    *@
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .my_navbar {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+            .my_navbar a {
+                float: left;
+                font-size: 16px;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+        .my_dropdown {
+            float: left;
+            overflow: hidden;
+        }
+
+            .my_dropdown .my_dropbtn {
+                font-size: 16px;
+                border: none;
+                outline: none;
+                color: white;
+                padding: 14px 16px;
+                background-color: inherit;
+                font-family: inherit;
+                margin: 0;
+            }
+
+            .my_navbar li:hover, .my_dropdown:hover .my_dropbtn {
+                background-color: red;
+            }
+
+        .my_dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .my_dropdown-content a {
+                float: none;
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+            }
+
+                .my_dropdown-content a:hover {
+                    background-color: #ddd;
+                }
+
+        .my_dropdown:hover .my_dropdown-content {
+            display: block;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("EvenTourTM", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+
+            <div class="my_navbar">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @* <li>@Html.ActionLink("About", "About", "Home")</li>*@
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (Session["Email"] == null)
+                    {
+                    }
+                    else
+                    {
+                        if (Session["Email"].ToString() == "admin")
+                        {
+                            <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                            <li>@Html.ActionLink("Poze", "Index", "Pozes")</li>
+                        }
+                    }
+                    <li>@Html.ActionLink("Istoric evenimente", "IndexIstoric", "Eveniments")</li>
+                    <div class="my_dropdown">
+                        <button class="my_dropbtn">
+                            Evenimente
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <ul class="my_dropdown-content">
+                            @if (Session["Id"] == null || Session["Email"].ToString() != "admin")
+                            {
+                                @Html.ActionLink("Festival", "IndexUser", "Eveniments", new { linktext = "Festival" }, null)
+                                @Html.ActionLink("Concert live", "IndexUser", "Eveniments", new { linktext = "Concert live" }, null)
+                                @Html.ActionLink("Teatru", "IndexUser", "Eveniments", new { linktext = "Teatru" }, null)
+                                @Html.ActionLink("Toate", "IndexUser", "Eveniments", new { linktext = "Toate" }, null)
+                            }
+                            else
+                            {
+                                if (Session["Email"].ToString() == "admin")
+                                {
+                                    @Html.ActionLink("Festival", "Index", "Eveniments", new { linktext = "Festival" }, null)
+                                    @Html.ActionLink("Concert live", "Index", "Eveniments", new { linktext = "Concert live" }, null)
+                                    @Html.ActionLink("Teatru", "Index", "Eveniments", new { linktext = "Teatru" }, null)
+                                    @Html.ActionLink("Toate", "Index", "Eveniments", new { linktext = "Toate" }, null)
+                                }
+                            }
+
+
+                        </ul>
+                    </div>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>" "</li>
+                    @if (Session["Id"] == null)
+                    {
+                        <li>@Html.ActionLink("Login", "Index", "Login")</li>
+                    }
+                    @if (Session["Id"] != null)
+                    {
+                        <li>@Html.ActionLink("Logout", "Logout", "Login")</li>
+                    }
+                </ul>
+            </div>
+            @*<div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li></li>
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+                        <li class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="javascript:void(0)" role="menu" id="DropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Categorii
+                            </a>
+                            <div class="dropdown-menu">
+                                <a> @Html.ActionLink("Aer liber", "Index", "Eveniments", new { linktext = "Aer liber" }, null)</a>
+                                <a class="dropdown-item"> @Html.ActionLink("Gen3", "Index", "Eveniments", new { linktext = "Gen3" }, null)</a>
+                            </div>
+                        </li>
+
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Eveniment", "Index", "Eveniments")</li>
+
+                        @if (Session["Id"] == null)
+                        {
+                            <li>@Html.ActionLink("Login", "Index", "Login")</li>
+                        }
+                        @if (Session["Id"] != null)
+                        {
+
+                            <li>@Html.ActionLink("Poze", "Index", "Pozes")</li>
+                            <li>@Html.ActionLink("User", "Index", "Users")</li>
+                            <li>@Html.ActionLink("Logout", "Logout", "Login")</li>
+                        }
+                    </ul>
+                </div>*@
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
