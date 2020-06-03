@@ -104,8 +104,17 @@
             <div class="my_navbar">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    @* <li>@Html.ActionLink("About", "About", "Home")</li>*@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (Session["Email"] == null)
+                    {
+                    }
+                    else
+                    {
+                        if (Session["Email"].ToString() != null && Session["Email"].ToString() != "admin")
+                        {
+                        <li>@Html.ActionLink("Chat", "Chat", "Home")</li>
+                        }
+                    }
                     @if (Session["Email"] == null)
                     {
                     }
@@ -113,39 +122,40 @@
                     {
                         if (Session["Email"].ToString() == "admin")
                         {
-                            <li>@Html.ActionLink("Users", "Index", "Users")</li>
-                            <li>@Html.ActionLink("Poze", "Index", "Pozes")</li>
+                                <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                                <li>@Html.ActionLink("Poze", "Index", "Pozes")</li>
                         }
+
                     }
-                    <li>@Html.ActionLink("Istoric evenimente", "IndexIstoric", "Eveniments")</li>
-                    <div class="my_dropdown">
-                        <button class="my_dropbtn">
-                            Evenimente
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                        <ul class="my_dropdown-content">
-                            @if (Session["Id"] == null || Session["Email"].ToString() != "admin")
-                            {
-                                @Html.ActionLink("Festival", "IndexUser", "Eveniments", new { linktext = "Festival" }, null)
-                                @Html.ActionLink("Concert live", "IndexUser", "Eveniments", new { linktext = "Concert live" }, null)
-                                @Html.ActionLink("Teatru", "IndexUser", "Eveniments", new { linktext = "Teatru" }, null)
-                                @Html.ActionLink("Toate", "IndexUser", "Eveniments", new { linktext = "Toate" }, null)
-                            }
-                            else
-                            {
-                                if (Session["Email"].ToString() == "admin")
+                        <li>@Html.ActionLink("Istoric evenimente", "IndexIstoric", "Eveniments")</li>
+                        <div class="my_dropdown">
+                            <button class="my_dropbtn">
+                                Evenimente
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <ul class="my_dropdown-content">
+                                @if (Session["Id"] == null || Session["Email"].ToString() != "admin")
                                 {
-                                    @Html.ActionLink("Festival", "Index", "Eveniments", new { linktext = "Festival" }, null)
-                                    @Html.ActionLink("Concert live", "Index", "Eveniments", new { linktext = "Concert live" }, null)
-                                    @Html.ActionLink("Teatru", "Index", "Eveniments", new { linktext = "Teatru" }, null)
-                                    @Html.ActionLink("Toate", "Index", "Eveniments", new { linktext = "Toate" }, null)
+                                    @Html.ActionLink("Festival", "IndexUser", "Eveniments", new { linktext = "Festival" }, null)
+                                    @Html.ActionLink("Concert live", "IndexUser", "Eveniments", new { linktext = "Concert live" }, null)
+                                    @Html.ActionLink("Teatru", "IndexUser", "Eveniments", new { linktext = "Teatru" }, null)
+                                    @Html.ActionLink("Toate", "IndexUser", "Eveniments", new { linktext = "Toate" }, null)
                                 }
-                            }
+                                else
+                                {
+                                    if (Session["Email"].ToString() == "admin")
+                                    {
+                                        @Html.ActionLink("Festival", "Index", "Eveniments", new { linktext = "Festival" }, null)
+                                        @Html.ActionLink("Concert live", "Index", "Eveniments", new { linktext = "Concert live" }, null)
+                                        @Html.ActionLink("Teatru", "Index", "Eveniments", new { linktext = "Teatru" }, null)
+                                        @Html.ActionLink("Toate", "Index", "Eveniments", new { linktext = "Toate" }, null)
+                                    }
+                                }
 
 
-                        </ul>
-                    </div>
-                </ul>
+                            </ul>
+                        </div>
+                    </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>" "</li>
                     @if (Session["Id"] == null)

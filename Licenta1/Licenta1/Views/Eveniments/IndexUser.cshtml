@@ -3,18 +3,20 @@
 @{
     ViewBag.Title = "IndexUser";
 }
-    <p>
-        <form id="formSearch" method="post">
-            <div class="row" id="SearchBox">
-                <div class="col-md-2">Cautare dupa denumire:</div>
-                <div class="col-md-2"><input type="text" id="searchedName" name="searchedName" /></div>
-                <div class="col-md-1"><input type="submit" id="submitsearch" value="Afiseaza" /></div>
-            </div>
-        </form>
-    </p>
+<p>
+    <form id="formSearch" method="post">
+        <div class="row" id="SearchBox">
+            <div class="col-md-2">Cautare dupa denumire:</div>
+            <div class="col-md-2"><input type="text" id="searchedName" name="searchedName" /></div>
+            <div class="col-md-1"><input type="submit" id="submitsearch" value="Afiseaza" /></div>
+        </div>
+    </form>
+</p>
 <h2>Evenimente</h2>
 
-
+@using (Html.BeginForm("SendEmail", "Eveniments"))
+{
+    @Html.AntiForgeryToken()
 <table class="table">
     <tr>
         <th>
@@ -60,10 +62,18 @@
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", new { id = item.EvenimentId }) |
-                @if (Session["Id"] != null) {
-                    @Html.ActionLink("Anunta-ma", "SendEmail", new { id = item.EvenimentId })}
+                @if (Session["Id"] != null)
+                {
+
+                    @*@Html.ActionLink("Anunta-ma", "SendEmail", new { id = item.EvenimentId })}*@
+                    <input type="submit" class="btn btn-default" value="Trimite-mi pe e-mail" formaction=@Url.Action("SendEmail", new { id = item.EvenimentId }) formmethod="post" />
+
+
+                }
             </td>
         </tr>
-     }
+    }
 
 </table>
+
+}

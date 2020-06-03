@@ -62,7 +62,7 @@ namespace Licenta1.Controllers
         public ActionResult Logout()
         {
             Session.Abandon();
-            return RedirectToAction("Index","Login");
+            return RedirectToAction("Index","Home");
         }
     }
 }

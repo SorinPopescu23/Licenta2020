@@ -88,16 +88,27 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <br />
-        <p>Your Comment</p>
-        <form onsubmit="return false;">
-            <input type="text" id="Name" placeholder="Numele tau" v-model="comment.Name" class="form-control" />
-            <textarea rows="3" placeholder="Comentariul tau" id="Body" v-model="comment.Body" class="form-control"></textarea>
-            <button class="btn btn-success" v-on:click="submit_comment()">save</button>
-        </form>
+
+    @if (Session["Email"] == null)
+    { }
+    else
+    {
+        if (Session["Email"].ToString() != "admin")
+        {
+        <div class="container">
+            <br />
+            <p>Your Comment</p>
+            <form onsubmit="return false;">
+                <input type="text" id="Name" placeholder="Numele tau" v-model="comment.Name" class="form-control" />
+                <textarea rows="3" placeholder="Comentariul tau" id="Body" v-model="comment.Body" class="form-control"></textarea>
+                <button class="btn btn-success" v-on:click="submit_comment()">save</button>
+            </form>
+        </div>
+        }
+    }
     </div>
-</div>
+
+<br />
 
     <p>
         @if (Session["Email"] == null)

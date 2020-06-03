@@ -159,26 +159,12 @@ namespace Licenta1.Controllers
             }
             return View(eveniment);
         }
-
-        public ActionResult SendEmail(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Eveniment eveniment = db.Evenimente.Find(id);
-            if (eveniment == null)
-            {
-                return HttpNotFound();
-            }
-            return View(eveniment);
-        }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SendEmail(int id)
         {
-            Eveniment eveniment = db.Evenimente.Find(id);
+           Eveniment eveniment = db.Evenimente.Find(id);
             //ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             if (ModelState.IsValid)
             {
@@ -186,7 +172,7 @@ namespace Licenta1.Controllers
                 message.To.Add(new MailAddress(Session["Email"].ToString()));  // replace with valid value 
                 message.From = new MailAddress("popescu.sorin23@gmail.com");  // replace with valid value
                 message.Subject = "Licenta Web App";
-                message.Body = "Hello, ai ales sa mergi la evenimentul "+eveniment.NumeEvent + " care se desfasoara in data de "+eveniment.DataEvent+". Descriere: " +eveniment.DescriereEvent;
+                message.Body = "Hello, ai ales sa mergi la evenimentul "+eveniment.NumeEvent + " care se desfasoara in data de "+ eveniment.DataEvent+". Descriere: " + eveniment.DescriereEvent;
                 message.IsBodyHtml = true;
 
                 using (var smtp = new SmtpClient())
