@@ -51,12 +51,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DataEvent)
             </td>
-            @* <td>
-                    @Html.DisplayFor(modelItem => item.DescriereEvent)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PozeEvent)
-                </td>*@
+            
             <td>
                 @Html.DisplayFor(modelItem => item.GenEvent)
             </td>
@@ -65,7 +60,6 @@
                 @if (Session["Id"] != null)
                 {
 
-                    @*@Html.ActionLink("Anunta-ma", "SendEmail", new { id = item.EvenimentId })}*@
                     <input type="submit" class="btn btn-default" value="Trimite-mi pe e-mail" formaction=@Url.Action("SendEmail", new { id = item.EvenimentId }) formmethod="post" />
 
 

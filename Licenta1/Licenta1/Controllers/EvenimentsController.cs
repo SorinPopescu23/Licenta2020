@@ -52,13 +52,7 @@ namespace Licenta1.Controllers
 
         public ActionResult IndexIstoric(string linktext)
         {
-            /*if (linktext == "Festival")
-                return View(db.Evenimente.Where(m => m.GenEvent == "Festival" && m.DataEvent < DateTime.Now).ToList());
-            if (linktext == "Concert live")
-                return View(db.Evenimente.Where(m => m.GenEvent == "Concert live" && m.DataEvent < DateTime.Now).ToList());
-            if (linktext == "Teatru")
-                return View(db.Evenimente.Where(m => m.GenEvent == "Teatru" && m.DataEvent < DateTime.Now).ToList());
-            else*/ return View(db.Evenimente.Where(m => m.DataEvent < DateTime.Now));
+             return View(db.Evenimente.Where(m => m.DataEvent < DateTime.Now));
         }
 
         // GET: Eveniments/Details/5
@@ -165,7 +159,6 @@ namespace Licenta1.Controllers
         public ActionResult SendEmail(int id)
         {
            Eveniment eveniment = db.Evenimente.Find(id);
-            //ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             if (ModelState.IsValid)
             {
                 var message = new MailMessage();
@@ -180,24 +173,20 @@ namespace Licenta1.Controllers
                     var credential = new NetworkCredential
                     {
                         UserName = "popescu.sorin23@gmail.com",  // replace with valid value
-                        Password = "Sorin1123!"  // replace with valid value
+                        Password = ""  // replace with valid value
                     };
                     smtp.UseDefaultCredentials = false;
                     smtp.Credentials = credential;
                     smtp.Host = "smtp.gmail.com";
                     smtp.Port = 587;
                     smtp.EnableSsl = true;
-                    //smtp.Timeout = 600;
-                    // int contor = 1;
-                    //DateTime d1 = eveniment.DataEvent.AddHours(-24);
-                    // bool today = System.DateTime.Equals(DateTime.Now.Day, d1);
                     smtp.Send(message);
                     
                     return RedirectToAction("IndexUser");
                 }
             }
-    return View();
-    }
+            return View();
+        }
     //return View();
 
         // GET: Eveniments/Delete/5

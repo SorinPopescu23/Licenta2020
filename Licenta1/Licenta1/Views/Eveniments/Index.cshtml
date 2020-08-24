@@ -4,13 +4,16 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Evenimente</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
+        <th>
+
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.NumeEvent)
         </th>
@@ -32,21 +35,24 @@
 @foreach (var item in Model) {
 <tr>
     <td>
+        <img src="@item.PozeEvent" style="max-width:100px; max-height:100px" ; />
+    </td>
+    <td>
         @Html.DisplayFor(modelItem => item.NumeEvent)
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.DataEvent)
     </td>
-   @* <td>
-        @Html.DisplayFor(modelItem => item.DescriereEvent)
-    </td>
+    @* <td>
+            @Html.DisplayFor(modelItem => item.DescriereEvent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PozeEvent)
+        </td>*@
     <td>
-        @Html.DisplayFor(modelItem => item.PozeEvent)
-    </td>*@
-<td>
-    @Html.DisplayFor(modelItem => item.GenEvent) - 
-    @Html.ActionLink("Details", "Details", new { id = item.EvenimentId })
-</td>
+        @Html.DisplayFor(modelItem => item.GenEvent) -
+        @Html.ActionLink("Details", "Details", new { id = item.EvenimentId })
+    </td>
     <td>
         @Html.ActionLink("Edit", "Edit", new { id = item.EvenimentId })  |
         @Html.ActionLink("Delete", "Delete", new { id = item.EvenimentId })

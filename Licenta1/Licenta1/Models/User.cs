@@ -15,36 +15,5 @@ namespace Licenta1.Models
         public string Password { get; set; }
         public virtual ICollection<Abonat> Abonati { get; set; }
 
-
-        /*IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-         {
-             Licenta1Context db = new Licenta1Context();
-             List<ValidationResult> validationResult = new List<ValidationResult>();
-             var validateEmail = db.Useri.FirstOrDefault(x => x.Email == Email && x.UserId != UserId);
-           // var validatePassword = db.Useri.FirstOrDefault(x => x.Password == Password && x.UserId != UserId);
-            if (validateEmail != null)
-             {
-                 ValidationResult errorMessage = new ValidationResult
-                 ("Email already exists.", new[] { "Email" });
-                 validationResult.Add(errorMessage);
-                 return validationResult;
-             }
-             else
-             {
-                 return validationResult;
-             }
-           
-            if (validatePassword != null)
-            {
-                ValidationResult errorMessage = new ValidationResult
-                ("Password already exists.", new[] { "Password" });
-                validationResult.Add(errorMessage);
-                return validationResult;
-            }
-            else
-            {
-                return validationResult;
-            }
-        }*/
     }
 }
